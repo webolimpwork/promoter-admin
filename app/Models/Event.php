@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
@@ -25,6 +26,7 @@ use Illuminate\Support\Carbon;
  * @property City $city
  * @property Project $project
  * @property Collection<int, EventCondition> $conditions
+ * @property Collection<int, User> $users
  */
 class Event extends Model
 {
@@ -109,5 +111,13 @@ class Event extends Model
     public function project(): BelongsTo
     {
         return $this->belongsTo(related: Project::class, foreignKey: 'project_id');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(related: User::class, table: 'user_event');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Project;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,12 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_categories', function (Blueprint $table) {
+        Schema::create('user_event', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignIdFor(Project::class, 'project_id');
-            $table->string('league_name');
-            $table->boolean('status')->default(true);
+            $table->foreignIdFor(Event::class, 'event_id');
+            $table->foreignIdFor(User::class , 'user_id');
         });
     }
 
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_categories');
+        Schema::dropIfExists('user_event');
     }
 };

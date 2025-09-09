@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\GiftCategory;
+use App\Models\Project;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('sku')->nullable();
             $table->foreignIdFor(GiftCategory::class, 'category_id');
+            $table->foreignIdFor(Project::class, 'project_id');
             $table->text('dimensions')->nullable();
             $table->boolean('status')->default(true);
         });

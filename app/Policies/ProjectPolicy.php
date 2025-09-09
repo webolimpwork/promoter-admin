@@ -2,23 +2,25 @@
 
 namespace App\Policies;
 
-use App\Enums\PermissionEnum;
-use App\Enums\RoleEnum;
 use App\Models\Project;
 use App\Models\User;
 
 class ProjectPolicy
 {
-    public function view(User $user, Project $project): bool
+    /**
+     * Может управлять проектом
+     *
+     * @param User $user
+     * @param Project $project
+     * @return bool
+     */
+    public function manage(User $user, Project $project): bool
     {
         // Если имеем роль рута
-        if ($user->role->slug === RoleEnum::ROOT->value) {
+        if ($user->isRoot()) {
             return true;
         }
 
-        return false;
-
-        // Если имеем роль админа
-       /// return $user->id === $post->user_id;
+        return $user->project_id === $project->id;
     }
 }

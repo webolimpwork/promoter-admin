@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property string $name
+ * @property int $project_id
  * @property boolean $status
  */
 class GiftCategory extends Model
@@ -27,6 +28,7 @@ class GiftCategory extends Model
     protected $fillable = [
         'name',
         'status',
+        'project_id'
     ];
 
     /**

@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use App\Enums\PermissionEnum;
-use App\Mappers\RolePermissionsMapper;
+use App\Enums\RoleEnum;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
@@ -24,6 +22,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property Role $role
  * @property Project $project
  * @property Collection<int, City> $cities
+ * @property Collection<int, Event> $events
  */
 class User extends Authenticatable
 {
@@ -72,26 +71,51 @@ class User extends Authenticatable
     }
 
     /**
+     * Является ли пользователь рутом
+     *
+     * @return bool
+     */
+    public function isRoot(): bool
+    {
+        return $this?->role?->slug === RoleEnum::ROOT->value;
+    }
+
+    /**
+     * Является ли пользователь админом
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this?->role?->slug === RoleEnum::ADMIN->value;
+    }
+
+    /**
+     * Является ли пользователь супервизором
+     *
+     * @return bool
+     */
+    public function isSupervisor(): bool
+    {
+        return $this?->role?->slug === RoleEnum::SUPERVISOR->value;
+    }
+
+    /**
+     * Является ли пользователь промоутером
+     *
+     * @return bool
+     */
+    public function isPromoter(): bool
+    {
+        return $this?->role?->slug === RoleEnum::PROMOTER->value;
+    }
+
+    /**
      * @return BelongsTo
      */
     public function role(): BelongsTo
     {
         return $this->belongsTo(related: Role::class);
-    }
-
-    /**
-     * @param PermissionEnum $permission
-     * @return bool
-     */
-    public function hasPermission(PermissionEnum $permission): bool
-    {
-        $role = $this->role?->name;
-
-        if (!$role) {
-            return false;
-        }
-
-        return RolePermissionsMapper::roleHasPermission($role, $permission);
     }
 
     /**
@@ -108,5 +132,13 @@ class User extends Authenticatable
     public function cities(): BelongsToMany
     {
         return $this->belongsToMany(related: City::class, table: 'user_city');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function events(): BelongsToMany
+    {
+        return $this->belongsToMany(related: Event::class, table: 'user_event');
     }
 }

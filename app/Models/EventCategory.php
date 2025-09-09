@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $name
  * @property boolean $status
+ * @property int $project_id
  */
 class EventCategory extends Model
 {
@@ -22,6 +23,7 @@ class EventCategory extends Model
     protected $fillable = [
         'name',
         'league_name',
+        'project_id',
         'status'
     ];
 
