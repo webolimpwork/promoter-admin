@@ -1,0 +1,53 @@
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/local/nginx/Dockerfile
+    container_name: nginx
+    restart: always
+    ports:
+      - "8083:80"
+    volumes:
+      - ./:/var/www/
+      - ./docker/local/nginx/conf.d:/etc/nginx/conf.d:ro
+    depends_on:
+      - php
+      - postgres
+    networks:
+      - web
+
+  php:
+    container_name: php
+    build:
+      context: .
+      dockerfile: docker/local/php/Dockerfile
+      args:
+        localUid: 1000
+        localGid: 1000
+        localUser: ${DOCKER_USER}
+    restart: always
+    volumes:
+      - ./:/var/www
+    networks:
+      - web
+
+  postgres:
+    image: postgres:17
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "8081:5432"
+    networks:
+      - web
+
+networks:
+  web:
+
+volumes:
+  postgres-data:
