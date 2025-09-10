@@ -14,13 +14,13 @@ class ProjectPolicy
      * @param Project $project
      * @return bool
      */
-    public function manage(User $user, Project $project): bool
+    public static function manage(User $user, Project $project): bool
     {
         // Если имеем роль рута
         if ($user->isRoot()) {
             return true;
         }
 
-        return $user->project_id === $project->id;
+        return false;
     }
 }

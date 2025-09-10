@@ -13,7 +13,7 @@ class UserPolicy
      * @var User $user - редактируемый/просматриваемый пользователь
      * @return bool
      */
-    public function manage(User $currentUser, User $user): bool
+    public static function manage(User $currentUser, User $user): bool
     {
         // Если имеем роль рута
         if ($currentUser->isRoot()) {
