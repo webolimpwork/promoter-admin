@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('gift_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignIdFor(Project::class, 'project_id');
+            $table->foreignIdFor(Project::class, 'project_id')->constrained('projects');
             $table->boolean('status')->default(true);
         });
     }

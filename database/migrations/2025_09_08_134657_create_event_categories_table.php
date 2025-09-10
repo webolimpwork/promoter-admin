@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('event_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignIdFor(Project::class, 'project_id');
+            $table->foreignIdFor(Project::class, 'project_id')->constrained('projects');
             $table->string('league_name');
             $table->boolean('status')->default(true);
         });

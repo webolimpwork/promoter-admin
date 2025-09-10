@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('name');
             $table->string('sku')->nullable();
-            $table->foreignIdFor(GiftCategory::class, 'category_id');
-            $table->foreignIdFor(Project::class, 'project_id');
+            $table->foreignIdFor(GiftCategory::class, 'category_id')->constrained('gift_categories');
+            $table->foreignIdFor(Project::class, 'project_id')->constrained('projects');
             $table->text('dimensions')->nullable();
             $table->boolean('status')->default(true);
         });

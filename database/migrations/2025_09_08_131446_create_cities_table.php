@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->boolean('status')->default(true);
-            $table->foreignIdFor(Project::class, 'project_id');
+            $table->foreignIdFor(Project::class, 'project_id')->constrained('projects');
         });
     }
 

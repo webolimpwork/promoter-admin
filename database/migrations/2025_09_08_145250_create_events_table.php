@@ -19,11 +19,11 @@ return new class extends Migration
             $table->id();
             $table->timestamp('start_date');
             $table->timestamp('end_date');
-            $table->foreignIdFor(City::class, 'city_id');
-            $table->foreignIdFor(Place::class, 'place_id');
-            $table->foreignIdFor(Project::class, 'project_id');
+            $table->foreignIdFor(City::class, 'city_id')->constrained('cities');
+            $table->foreignIdFor(Place::class, 'place_id')->constrained('places');
+            $table->foreignIdFor(Project::class, 'project_id')->constrained('projects');
             $table->string('name');
-            $table->foreignIdFor(EventCategory::class, 'category_id');
+            $table->foreignIdFor(EventCategory::class, 'category_id')->constrained('event_categories');
             $table->string('match_id', 20);
             $table->string('sponsor_club')->nullable();
             $table->boolean('status')->default(true);

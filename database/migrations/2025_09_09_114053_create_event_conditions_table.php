@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('event_conditions', function (Blueprint $table) {
             $table->id();
             $table->string('type', 64);
-            $table->foreignIdFor(Event::class, 'event_id');
+            $table->foreignIdFor(Event::class, 'event_id')->constrained('events');
             $table->text('data')->nullable();
         });
     }
